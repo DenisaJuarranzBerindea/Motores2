@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Windows;
 
 public class InputManager : MonoBehaviour
 {
@@ -36,6 +35,18 @@ public class InputManager : MonoBehaviour
     /// </summary>
     void Update()
     {
-        //TODO
+        //Recibimos el input
+        //Duda 1: Esto no debería contar como StringTyping, porque son los únicos parámetros que admite el GetAxis.
+        //La cosa es que se tienen que poner como string
+        //Duda 2: ¿Deberíamos comprobar si hay input en estos casos? Es que si no hay, simplemente devuelven float 0.0f... 
+        //Lo que significa que no recibirá movimiento en esa dirección
+        _playerCharacterMovement.SetHorizontalInput(Input.GetAxis("Horizontal"));
+        _playerCharacterMovement.SetVerticalInput(Input.GetAxis("Vertical"));
+
+        //Detectamos salto, mismamente con el Espace
+        if (Input.GetKeyDown(KeyCode.Escape)) 
+        {
+            _playerCharacterMovement.Jump();
+        }
     }
 }

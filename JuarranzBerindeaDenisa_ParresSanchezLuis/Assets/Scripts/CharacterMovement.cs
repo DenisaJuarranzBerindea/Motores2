@@ -74,7 +74,7 @@ public class CharacterMovement : MonoBehaviour
     /// <param name="x">Received horizontal component</param>
     public void SetHorizontalInput(float x)  
     {
-        //TODO
+        _xAxis = x;
     }
 
     /// <summary>
@@ -83,7 +83,7 @@ public class CharacterMovement : MonoBehaviour
     /// <param name="y">Received vertical component</param>
     public void SetVerticalInput(float y)
     {
-        //TODO
+        _zAxis = y;
     }
 
     /// <summary>
@@ -93,7 +93,11 @@ public class CharacterMovement : MonoBehaviour
     /// </summary>
     public void Jump()
     {
-        //TODO
+        //Si está tocando suelo, y se solicita salto, la velocidad vertical será la del salto
+        if (_myCharacterController.isGrounded) 
+        {
+            _verticalSpeed = _jumpSpeed;
+        }
     }   
     #endregion
 
@@ -104,7 +108,10 @@ public class CharacterMovement : MonoBehaviour
     /// </summary>
     void Start()
     {
-        //TODO
+        _myCharacterController = GetComponent<CharacterController>();
+        _myTransform = transform;
+
+        //Meter lo de la cámara, y registrar en el Input Manager
     }
 
     /// <summary>
@@ -118,6 +125,25 @@ public class CharacterMovement : MonoBehaviour
     /// </summary>
     void Update()
     {
-        //TODO
+        //Dirección horizontal normalizado
+        _movementDirection = new Vector3(_xAxis, 0, _zAxis).normalized;
+
+        //Velocidad vertical clampeada
+        _verticalSpeed = Mathf.Clamp(_verticalSpeed + Physics.gravity.y * Time.deltaTime, _minSpeed, _jumpSpeed);
+
+        //Vector de movimiento (parte horizontal + parte vertical)
+        Vector3 movementVector = _movementSpeed * _movementDirection + _verticalSpeed * Vector3.up * Time.deltaTime;
+
+        //Movimiento (Duda. En la gravedad, técnicamente sería por
+        //Tiempo al cuadrado, pero en clase se ha dicho que se puede obviar. Cómo lo hacemos entonces?)
+        _myCharacterController.SimpleMove(movementVector);
+
+        //Direccionamiento del personaje, hacia el movimiento
+        //No tengo claro que funcione del todo
+        _myTransform.LookAt(movementVector);
+
+        //Lo de la cámara no está hecho
+
+        //Duda importante. ¿Cómo se congela la rotación en un eje de la moñeca? Que se cae para adelante...
     }
 }
