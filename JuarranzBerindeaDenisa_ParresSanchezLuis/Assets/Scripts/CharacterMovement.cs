@@ -35,10 +35,10 @@ public class CharacterMovement : MonoBehaviour
     /// </summary>
     private Transform _myTransform;
 
-    ///// <summary>
-    ///// Reference to Camera's CameraController
-    ///// </summary>
-    //private CameraController _cameraController;
+    /// <summary>
+    /// Reference to Camera's CameraController
+    /// </summary>
+    private CameraController _cameraController;
 
     #endregion
 
@@ -104,13 +104,13 @@ public class CharacterMovement : MonoBehaviour
     /// <summary>
     /// START
     /// Needs to assign _myCharacterController, _myTransform and _cameraController.
-    /// If InputManager is already assigned, it will also register the player on it.
+    /// If InputManager is already assigned, it will also register the player on it. //PREGUNTAR
     /// </summary>
     void Start()
     {
         _myCharacterController = GetComponent<CharacterController>();
         _myTransform = transform;
-
+        _cameraController = Camera.main.GetComponent<CameraController>(); //PREGUNTAR
         //Meter lo de la cámara, y registrar en el Input Manager (Creo que el IM tiene un singleton en el Game Manager, así que lo voy a dejar hecho, para poder acceder a él más fácil)
     }
 
@@ -132,18 +132,23 @@ public class CharacterMovement : MonoBehaviour
         _verticalSpeed = Mathf.Clamp(_verticalSpeed + Physics.gravity.y * Time.deltaTime, _minSpeed, _jumpSpeed);
 
         //Vector de movimiento (parte horizontal + parte vertical)
-        Vector3 movementVector = _movementSpeed * _movementDirection + _verticalSpeed * Vector3.up * Time.deltaTime;
+        Vector3 movementVector = _movementSpeed * _movementDirection + _verticalSpeed * Vector3.up;
 
         //Movimiento (Duda. En la gravedad, técnicamente sería por
         //Tiempo al cuadrado, pero en clase se ha dicho que se puede obviar. Cómo lo hacemos entonces?)
-        _myCharacterController.SimpleMove(movementVector);
+        _myCharacterController.Move(movementVector * Time.deltaTime);
 
-        //Direccionamiento del personaje, hacia el movimiento
-        //No tengo claro que funcione del todo
-        _myTransform.LookAt(movementVector);
+        //Direccionamiento del personaje, hacia el movimiento //PREGUNTAR
+        //_myTransform.forward = _movementDirection;
+        //_myTransform.LookAt(_movementDirection + _myTransform.position); 
+        //Slerp
 
-        //Lo de la cámara no está hecho
+        if (_movementDirection != Vector3.zero) 
+        {
+            _myTransform.forward = _movementDirection;
+        }
 
-        //Duda importante. ¿Cómo se congela la rotación en un eje de la moñeca? Que se cae para adelante...
+        //Seguirá en vertical si está tocando el suelo
+        //_cameraController.SetVerticalFollow(_myCharacterController.isGrounded);
     }
 }
