@@ -79,7 +79,20 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        //TODO
+        if (_instance == null) 
+        { 
+            _instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        //¿Hay que hacer lo mismo con el input?
+        if (_input != null)
+        {
+            Destroy(_input);
+        }
     }
 
     /// <summary>
@@ -88,7 +101,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        //TODO
+        //Inicializamos la referencia al IM
+        _input = GetComponenent<InputManager>();
     }
 
 }

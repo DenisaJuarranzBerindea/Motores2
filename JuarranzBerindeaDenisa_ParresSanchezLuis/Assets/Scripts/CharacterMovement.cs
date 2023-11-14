@@ -111,7 +111,7 @@ public class CharacterMovement : MonoBehaviour
         _myCharacterController = GetComponent<CharacterController>();
         _myTransform = transform;
 
-        //Meter lo de la cámara, y registrar en el Input Manager
+        //Meter lo de la cámara, y registrar en el Input Manager (Creo que el IM tiene un singleton en el Game Manager, así que lo voy a dejar hecho, para poder acceder a él más fácil)
     }
 
     /// <summary>
