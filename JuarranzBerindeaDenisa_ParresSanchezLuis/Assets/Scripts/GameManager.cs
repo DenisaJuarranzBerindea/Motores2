@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         //Inicializamos la referencia al IM
-        _input = GetComponenent<InputManager>();
+        _input = GetComponent<InputManager>();
     }
 
 }
