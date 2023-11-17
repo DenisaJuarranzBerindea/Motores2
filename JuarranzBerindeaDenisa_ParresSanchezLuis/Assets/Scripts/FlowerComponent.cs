@@ -19,6 +19,6 @@ public class FlowerComponent : MonoBehaviour
     /// </summary>
     void Start()
     {
-        //TODO
+        GameManager.Instance.RegisterFlower();
     }
 }

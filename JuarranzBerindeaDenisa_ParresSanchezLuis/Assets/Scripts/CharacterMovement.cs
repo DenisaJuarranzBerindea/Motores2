@@ -104,14 +104,17 @@ public class CharacterMovement : MonoBehaviour
     /// <summary>
     /// START
     /// Needs to assign _myCharacterController, _myTransform and _cameraController.
-    /// If InputManager is already assigned, it will also register the player on it. //PREGUNTAR
+    /// If InputManager is already assigned, it will also register the player on it. //PREGUNTAR ¿Cuál se ejecuta antes?
     /// </summary>
     void Start()
     {
         _myCharacterController = GetComponent<CharacterController>();
+
         _myTransform = transform;
+
         _cameraController = Camera.main.GetComponent<CameraController>(); //PREGUNTAR
-        //Meter lo de la cámara, y registrar en el Input Manager (Creo que el IM tiene un singleton en el Game Manager, así que lo voy a dejar hecho, para poder acceder a él más fácil)
+
+        GameManager.Instance.Input.RegisterPlayer(this);
     }
 
     /// <summary>
@@ -149,6 +152,6 @@ public class CharacterMovement : MonoBehaviour
         }
 
         //Seguirá en vertical si está tocando el suelo
-        //_cameraController.SetVerticalFollow(_myCharacterController.isGrounded);
+        _cameraController.SetVerticalFollow(_myCharacterController.isGrounded);
     }
 }

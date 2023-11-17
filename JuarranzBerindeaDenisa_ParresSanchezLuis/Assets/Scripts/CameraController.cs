@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 public class CameraController : MonoBehaviour
 {
@@ -14,6 +15,12 @@ public class CameraController : MonoBehaviour
     /// Vertical distance from Camera to CameraTarget.
     /// </summary>
     [SerializeField] private float _verticalOffset = 1.0f;
+
+    /// <summary>
+    /// Pitch rotation for Camera.
+    /// </summary>
+    [SerializeField] private float _pitchRotationOffset = 1.0f;
+
 
     /// <summary>
     /// Multiplier factor to regulate camera responsiveness to target's movement.
@@ -58,7 +65,7 @@ public class CameraController : MonoBehaviour
     /// <param name="verticalFollowEnabled"></param>
     public void SetVerticalFollow(bool verticalFollowEnabled)
     {
-        //TODO
+        _yFollowEnabled = verticalFollowEnabled;
     }
 
     #endregion
@@ -69,7 +76,11 @@ public class CameraController : MonoBehaviour
     /// </summary>
     void Start()
     {
-        //TODO
+        _myTransform = transform;
+        _yPreviousFrameValue = _targetTransform.position.y + _verticalOffset;
+
+        Vector3 rotationOffset = new Vector3(_pitchRotationOffset, 0, 0); // PREGUNTAR
+        _myTransform.eulerAngles = rotationOffset;
     }
 
     /// <summary>
@@ -80,6 +91,19 @@ public class CameraController : MonoBehaviour
     /// </summary>
     void LateUpdate()
     {
-        //TODO
+        Vector3 movementOffset = new Vector3(0, _verticalOffset, _horizontalOffset);
+
+        // Calculamos la posición de la camara suavizada respecto al player
+        _myTransform.position = Vector3.Lerp(_myTransform.position, _targetTransform.position + movementOffset, _followFactor * Time.deltaTime);
+
+        if (_yFollowEnabled)
+        {
+            _yPreviousFrameValue = _myTransform.position.y;
+        }
+        else
+        {
+            // Si player !onGround, seteamos la componente "y" de la cámara a su última posición onGround.
+            _myTransform.position = new Vector3(_myTransform.position.x, _yPreviousFrameValue, _myTransform.position.z);
+        }
     }
 }

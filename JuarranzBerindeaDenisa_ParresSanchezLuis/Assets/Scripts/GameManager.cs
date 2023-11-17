@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Unique allowed instance of GameManager class, self-assigned on Awake (singleton)
     /// </summary>
-    static private GameManager _instance;
+    static private GameManager _instance;   
 
     /// <summary>
     /// Public accessor so everyone can access the unique instance of the class without being able to modify it.
@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void RegisterFlower()
     {
-        //TODO
+        _nFlowers++;
     }
 
     /// <summary>
@@ -57,7 +57,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void ReleaseFlower()
     {
-        //TODO 
+        _nFlowers--;
+        if (_nFlowers == 0) RestartLevel();
     }
         
     /// <summary>
@@ -93,6 +94,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(_input);
         }
+
+        _input = GetComponent<InputManager>();
     }
 
     /// <summary>
@@ -102,7 +105,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         //Inicializamos la referencia al IM
-        _input = GetComponent<InputManager>();
+        
     }
 
 }
