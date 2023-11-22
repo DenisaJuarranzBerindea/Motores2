@@ -19,14 +19,24 @@ public class AnimationComponent : MonoBehaviour
 
     #endregion
 
+    #region Properties
+
+    /// <summary>
+    /// Stores the string, to avoid errors because of stringTyping
+    /// </summary>
+    private string _animationState = "AnimState";
+
+    #endregion
+
     /// <summary>
     /// START
     /// Assign _myCharacterController and _myAnimator
-    /// Check if both are correct or disable component
+    /// Check if both are correct or disable component  (PREGUNTAR, ¿cómo que si están correctos? ¿Y si no lo están, lo desactivo?)
     /// </summary>
     void Start()
     {
-        //TODO
+        _myCharacterController = GetComponent<CharacterController>();
+        _myAnimator = GetComponent<Animator>(); 
     }
 
     /// <summary>
@@ -36,6 +46,21 @@ public class AnimationComponent : MonoBehaviour
     /// </summary>
     void Update()
     {
-        //TODO
+        //Debug.Log("(" + _myCharacterController.velocity.x + " , "
+        //              + _myCharacterController.velocity.y + " , "
+        //              + _myCharacterController.velocity.z + ")");
+
+        if (_myCharacterController.velocity.x != 0 || _myCharacterController.velocity.z != 0) 
+        {
+            _myAnimator.SetInteger(_animationState, 1); //Estado Move
+        }
+        else if (_myCharacterController.velocity.y != 0)  
+        {
+            _myAnimator.SetInteger(_animationState, 2); //Estado Jump
+        }
+        else
+        {
+            _myAnimator.SetInteger(_animationState, 0); //Estado Idle
+        }
     }
 }
