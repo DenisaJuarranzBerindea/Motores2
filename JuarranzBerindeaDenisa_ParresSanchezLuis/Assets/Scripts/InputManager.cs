@@ -1,4 +1,4 @@
-using System.Collections;
+    using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -43,7 +43,7 @@ public class InputManager : MonoBehaviour
         _playerCharacterMovement.SetHorizontalInput(Input.GetAxis("Horizontal"));
         _playerCharacterMovement.SetVerticalInput(Input.GetAxis("Vertical"));
 
-        //Detectamos salto, mismamente con el Espace
+        //Detectamos salto, con el Space
         if (Input.GetKeyDown(KeyCode.Space)) 
         {
             _playerCharacterMovement.Jump();

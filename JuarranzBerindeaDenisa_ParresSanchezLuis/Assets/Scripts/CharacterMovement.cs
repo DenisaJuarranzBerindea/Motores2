@@ -12,6 +12,12 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] private float _movementSpeed = 3.0f;
 
     /// <summary>
+    /// Rotation speed of the player, smoothed with a Slerp
+    /// </summary>
+    /// Desired horizontal movement speed
+    [SerializeField] private float _rotationSpeed = 10.0f;
+
+    /// <summary>
     /// Vertical speed assigned to character when jump starts
     /// </summary>
     [SerializeField] private float _jumpSpeed = 20.0f;
@@ -62,7 +68,7 @@ public class CharacterMovement : MonoBehaviour
     /// <summary>
     /// Movement vertical speed (needs to be updated every frame due to gravity)
     /// </summary>
-    private float _verticalSpeed;
+    [SerializeField] private float _verticalSpeed; //PREGUNTAR (vertical speed es -10 onGround)
 
     #endregion
 
@@ -114,7 +120,7 @@ public class CharacterMovement : MonoBehaviour
 
         _cameraController = Camera.main.GetComponent<CameraController>(); //PREGUNTAR
 
-        GameManager.Instance.Input.RegisterPlayer(this);
+        GameManager.Instance.Input.RegisterPlayer(this); //PREGUNTAR
     }
 
     /// <summary>
@@ -142,13 +148,13 @@ public class CharacterMovement : MonoBehaviour
         _myCharacterController.Move(movementVector * Time.deltaTime);
 
         //Direccionamiento del personaje, hacia el movimiento //PREGUNTAR
-        //_myTransform.forward = _movementDirection;
         //_myTransform.LookAt(_movementDirection + _myTransform.position); 
         //Slerp
 
         if (_movementDirection != Vector3.zero) 
         {
-            _myTransform.forward = _movementDirection;
+            //_myTransform.forward = _movementDirection;
+            _myTransform.forward = Vector3.Slerp(_myTransform.forward, _movementDirection, Time.deltaTime * _rotationSpeed);
         }
 
         //Seguirá en vertical si está tocando el suelo

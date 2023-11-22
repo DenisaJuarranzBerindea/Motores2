@@ -10,7 +10,11 @@ public class FlowerComponent : MonoBehaviour
     /// <param name="other">Collider of colliding object</param>
     private void OnTriggerEnter(Collider other)
     {
-        //TODO
+        if (other.GetComponent<CharacterController>() != null)
+        {
+            GameManager.Instance.ReleaseFlower();
+            gameObject.SetActive(false);
+        }
     }
 
     /// <summary>

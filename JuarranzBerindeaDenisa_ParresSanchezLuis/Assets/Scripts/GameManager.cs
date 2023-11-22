@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void RestartLevel()
     {
-        //TODO
+        SceneManager.LoadScene("Level 1");
     }
 
     #endregion
@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviour
             Destroy(_input);
         }
 
-        _input = GetComponent<InputManager>();
+        _input = GetComponent<InputManager>();  //PREGUNTAR Si asignamos input en start, el start de Character mov no funciona.
     }
 
     /// <summary>
