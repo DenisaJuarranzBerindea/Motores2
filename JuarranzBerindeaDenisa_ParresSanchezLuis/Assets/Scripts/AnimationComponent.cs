@@ -44,20 +44,23 @@ public class AnimationComponent : MonoBehaviour
     /// Evaluate _myCharacterController velocity
     /// Assign the right animation according to this using integer parameter "AnimState"
     /// </summary>
+    /// //PREGUNTAR:    isGrounded para el salto
+    ///                 flechas grises animator
+    ///                 animacion idle al cambio de sentido
     void Update()
     {
         //Debug.Log("(" + _myCharacterController.velocity.x + " , "
         //              + _myCharacterController.velocity.y + " , "
         //              + _myCharacterController.velocity.z + ")");
 
-        if (_myCharacterController.velocity.x != 0 || _myCharacterController.velocity.z != 0) 
-        {
-            _myAnimator.SetInteger(_animationState, 1); //Estado Move
-        }
-        else if (_myCharacterController.velocity.y != 0)  
+        if (!_myCharacterController.isGrounded)
         {
             _myAnimator.SetInteger(_animationState, 2); //Estado Jump
         }
+        else if (Mathf.Abs(_myCharacterController.velocity.x) > 0.1 || Mathf.Abs(_myCharacterController.velocity.z) > 0.1)
+        {
+            _myAnimator.SetInteger(_animationState, 1); //Estado Move
+        }       
         else
         {
             _myAnimator.SetInteger(_animationState, 0); //Estado Idle
