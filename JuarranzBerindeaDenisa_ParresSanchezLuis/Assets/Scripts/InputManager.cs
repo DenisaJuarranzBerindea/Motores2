@@ -22,7 +22,6 @@ public class InputManager : MonoBehaviour
     /// <param name="playerCharacterMovement">Player's CharacterMovement (Component to be registered)</param>
     public void RegisterPlayer(CharacterMovement playerCharacterMovement)
     {
-        //TODO
         _playerCharacterMovement = playerCharacterMovement;
     }
 
