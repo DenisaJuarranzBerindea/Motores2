@@ -89,7 +89,6 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        //¿Hay que hacer lo mismo con el input?
         if (_input != null)
         {
             Destroy(_input);

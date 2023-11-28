@@ -26,6 +26,16 @@ public class AnimationComponent : MonoBehaviour
     /// </summary>
     private string _animationState = "AnimState";
 
+    /// <summary>
+    /// Tiempo mínimo a esperar antes de iniciar la animación de Idle cuando la velocity es 0.
+    /// </summary>
+    [SerializeField] private float _minTime = 0.05f;
+
+    /// <summary>
+    /// Contador de tiempo hasta alcanzar _minTime
+    /// </summary>
+    [SerializeField] private float _timer;
+
     #endregion
 
     /// <summary>
@@ -60,18 +70,25 @@ public class AnimationComponent : MonoBehaviour
         //Debug.Log("(" + _myCharacterController.velocity.x + " , "
         //              + _myCharacterController.velocity.y + " , "
         //              + _myCharacterController.velocity.z + ")");
-
         if (!_myCharacterController.isGrounded)
         {
             _myAnimator.SetInteger(_animationState, 2); //Estado Jump
+            if (_timer > 0) { _timer = 0; }
         }
         else if (Mathf.Abs(_myCharacterController.velocity.x) > 0.1 || Mathf.Abs(_myCharacterController.velocity.z) > 0.1)
         {
             _myAnimator.SetInteger(_animationState, 1); //Estado Move
+            if (_timer > 0) { _timer = 0; }
         }       
-        else
+        else if (Mathf.Abs(_myCharacterController.velocity.x) <= 0.1 || Mathf.Abs(_myCharacterController.velocity.z) <= 0.1 )
         {
-            _myAnimator.SetInteger(_animationState, 0); //Estado Idle
+            _timer += Time.deltaTime;
+
+            if (_timer >= _minTime)
+            {
+                _myAnimator.SetInteger(_animationState, 0); //Estado Idle
+                _timer = 0;
+            }
         }
     }
 }
