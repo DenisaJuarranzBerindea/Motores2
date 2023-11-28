@@ -69,7 +69,7 @@ public class CharacterMovement : MonoBehaviour
     /// <summary>
     /// Movement vertical speed (needs to be updated every frame due to gravity)
     /// </summary>
-    [SerializeField] private float _verticalSpeed; //PREGUNTAR (vertical speed es -10 onGround) - Resetear con un valor más grande, rollo -1 
+    private float _verticalSpeed; 
 
     #endregion
 
@@ -102,16 +102,14 @@ public class CharacterMovement : MonoBehaviour
     {
         //Si está tocando suelo, y se solicita salto, la velocidad vertical será la del salto
         if (_myCharacterController.isGrounded) 
-        {
             _verticalSpeed = _jumpSpeed;
-        }
     }   
     #endregion
 
     /// <summary>
     /// START
     /// Needs to assign _myCharacterController, _myTransform and _cameraController.
-    /// If InputManager is already assigned, it will also register the player on it. //PREGUNTAR ¿Cuál se ejecuta antes?
+    /// If InputManager is already assigned, it will also register the player on it.
     /// </summary>
     void Start()
     {
@@ -119,9 +117,10 @@ public class CharacterMovement : MonoBehaviour
 
         _myTransform = transform;
 
-        _cameraController = Camera.main.GetComponent<CameraController>(); //PREGUNTAR - Chachi
+        _cameraController = Camera.main.GetComponent<CameraController>();
 
-        GameManager.Instance.Input.RegisterPlayer(this); //PREGUNTAR - Chachi
+        // Registramos al player en el input
+        GameManager.Instance.Input.RegisterPlayer(this);
     }
 
     /// <summary>
@@ -138,29 +137,24 @@ public class CharacterMovement : MonoBehaviour
         //Dirección horizontal normalizado
         _movementDirection = new Vector3(_xAxis, 0, _zAxis).normalized;
 
-        //Velocidad vertical clampeada
-        _verticalSpeed = Mathf.Clamp(_verticalSpeed + Physics.gravity.y * Time.deltaTime, _minSpeed, _jumpSpeed);
+        //Velocidad vertical clampeada cuando se encuentra en el aire
+        if (!_myCharacterController.isGrounded)
+            _verticalSpeed = Mathf.Clamp(_verticalSpeed + Physics.gravity.y * Time.deltaTime, _minSpeed, _jumpSpeed);
 
         //Vector de movimiento (parte horizontal + parte vertical)
         Vector3 movementVector = _movementSpeed * _movementDirection + _verticalSpeed * Vector3.up;
 
-        //Movimiento (Duda. En la gravedad, técnicamente sería por
-        //Tiempo al cuadrado, pero en clase se ha dicho que se puede obviar. Cómo lo hacemos entonces?)
         _myCharacterController.Move(movementVector * Time.deltaTime);
 
-        //Direccionamiento del personaje, hacia el movimiento //PREGUNTAR - No sé si esto le convencía del todo
-        //_myTransform.LookAt(_movementDirection + _myTransform.position); 
-        //Slerp
+        // Velocidad vertical por defecto si se encuentra en el suelo
+        if (_myCharacterController.isGrounded) _verticalSpeed = -1f;
 
-        //Mirar lo del salto brusco
-
+        // Rotación del personaje igualando su eje local forward a su dirección de movimiento.
+        // Usamos un Slerp para suavizar la rotación
         if (_movementDirection != Vector3.zero) 
-        {
-            //_myTransform.forward = _movementDirection;
             _myTransform.forward = Vector3.Slerp(_myTransform.forward, _movementDirection, Time.deltaTime * _rotationSpeed);
-        }
 
-        //Seguirá en vertical si está tocando el suelo
+        // Seteamos la cámara para que siga al personaje verticalmente solo si está en el suelo.
         _cameraController.SetVerticalFollow(_myCharacterController.isGrounded);
     }
 }

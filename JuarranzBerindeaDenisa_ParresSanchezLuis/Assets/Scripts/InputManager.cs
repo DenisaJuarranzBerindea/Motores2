@@ -35,14 +35,12 @@ public class InputManager : MonoBehaviour
     /// </summary>
     void Update()
     {
-        //Recibimos el input
-        //PREGUNTAR El StringTyping es aceptable aquí, ¿no? - Si
-        //PREGUNTAR ¿Deberíamos comprobar si hay input en estos casos? Es que si no hay, simplemente devuelven float 0.0f... 
-        //Lo que significa que no recibirá movimiento en esa dirección
+        // Recibimos el input mediante el Input Manager de Unity.
+        // Se puede modificar desde Edit > Proyect Settings > InputManager > Axes
         _playerCharacterMovement.SetHorizontalInput(Input.GetAxis("Horizontal"));
         _playerCharacterMovement.SetVerticalInput(Input.GetAxis("Vertical"));
 
-        //Detectamos salto, con el Space
+        // Recogemos el input de la tecla Space para llamar al salto del Player.
         if (Input.GetKeyDown(KeyCode.Space)) 
         {
             _playerCharacterMovement.Jump();

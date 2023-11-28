@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
     public void ReleaseFlower()
     {
         _nFlowers--;
-        if (_nFlowers == 0) RestartLevel();
+        if (_nFlowers <= 0) RestartLevel();
     }
         
     /// <summary>
@@ -105,7 +105,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        //Inicializamos la referencia al IM
+        //Inicializamos la referencia del InputManager desde Awake()
+        //para poder acceder al mismo desde el Start() de cualquier otro componente
         
     }
 

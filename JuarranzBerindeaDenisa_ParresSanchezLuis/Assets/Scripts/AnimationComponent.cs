@@ -15,7 +15,7 @@ public class AnimationComponent : MonoBehaviour
     /// Reference to player's Animator.
     /// Needs to be assigned on Start.
     /// </summary>
-    private Animator _myAnimator;
+    private Animator _myAnimator;   
 
     #endregion
 
@@ -31,16 +31,19 @@ public class AnimationComponent : MonoBehaviour
     /// <summary>
     /// START
     /// Assign _myCharacterController and _myAnimator
-    /// Check if both are correct or disable component  (PREGUNTAR, ¿cómo que si están correctos? ¿Y si no lo están, lo desactivo?) - ==null
+    /// Check if both are correct or disable component
     /// </summary>
     void Start()
     {
         _myCharacterController = GetComponent<CharacterController>();
         _myAnimator = GetComponent<Animator>(); 
 
-        if (_myCharacterController == null || _myAnimator == null)
+        if (_myCharacterController == null ||
+            _myAnimator == null ||
+            _myCharacterController.enabled == false ||
+            _myAnimator.enabled == false)
         {
-            enabled = false; //(?No se desactiva el componente)
+            enabled = false;
         }
     }
 

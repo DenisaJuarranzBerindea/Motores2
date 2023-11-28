@@ -17,12 +17,6 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float _verticalOffset = 1.0f;
 
     /// <summary>
-    /// Pitch rotation for Camera.
-    /// </summary>
-    [SerializeField] private float _pitchRotationOffset = 1.0f;
-
-
-    /// <summary>
     /// Multiplier factor to regulate camera responsiveness to target's movement.
     /// </summary>
     [SerializeField] private float _followFactor = 1.0f;
@@ -76,11 +70,8 @@ public class CameraController : MonoBehaviour
     /// </summary>
     void Start()
     {
-        _myTransform = transform;
+        _myTransform = transform; 
         _yPreviousFrameValue = _targetTransform.position.y + _verticalOffset;
-
-        //Vector3 rotationOffset = new Vector3(_pitchRotationOffset, 0, 0); // PREGUNTAR - Basta con ponerle rotación a la propia cámara
-        //_myTransform.eulerAngles = rotationOffset;
     }
 
     /// <summary>

@@ -3608,7 +3608,6 @@ MonoBehaviour:
   _rotationSpeed: 10
   _jumpSpeed: 6
   _minSpeed: -5
-  _verticalSpeed: 0
 --- !u!143 &956679918
 CharacterController:
   m_ObjectHideFlags: 0
