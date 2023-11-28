@@ -29,12 +29,12 @@ public class AnimationComponent : MonoBehaviour
     /// <summary>
     /// Tiempo mínimo a esperar antes de iniciar la animación de Idle cuando la velocity es 0.
     /// </summary>
-    [SerializeField] private float _minTime = 0.05f;
+    private float _minTime = 0.05f;
 
     /// <summary>
     /// Contador de tiempo hasta alcanzar _minTime
     /// </summary>
-    [SerializeField] private float _timer;
+    private float _timer;
 
     #endregion
 
@@ -62,14 +62,12 @@ public class AnimationComponent : MonoBehaviour
     /// Evaluate _myCharacterController velocity
     /// Assign the right animation according to this using integer parameter "AnimState"
     /// </summary>
-    /// //PREGUNTAR:    isGrounded para el salto - Guay
-    ///                 flechas grises animator - Dejarlo así
-    ///                 animacion idle al cambio de sentido - Hay que echarle un ojo
     void Update()
     {
-        //Debug.Log("(" + _myCharacterController.velocity.x + " , "
+        //Debug.Log("(" + _myCharacterController.velocity.x + " , ");
         //              + _myCharacterController.velocity.y + " , "
         //              + _myCharacterController.velocity.z + ")");
+
         if (!_myCharacterController.isGrounded)
         {
             _myAnimator.SetInteger(_animationState, 2); //Estado Jump
@@ -80,9 +78,13 @@ public class AnimationComponent : MonoBehaviour
             _myAnimator.SetInteger(_animationState, 1); //Estado Move
             if (_timer > 0) { _timer = 0; }
         }       
-        else if (Mathf.Abs(_myCharacterController.velocity.x) <= 0.1 || Mathf.Abs(_myCharacterController.velocity.z) <= 0.1 )
+        else
         {
-            _timer += Time.deltaTime;
+            //Si ya está en Idle no cuenta.
+            if (_myAnimator.GetInteger(_animationState) != 0)
+            {
+                _timer += Time.deltaTime;
+            }
 
             if (_timer >= _minTime)
             {

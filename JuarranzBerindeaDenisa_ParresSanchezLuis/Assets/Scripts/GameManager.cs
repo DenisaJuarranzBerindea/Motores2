@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Reference to input manager
     /// </summary>
-    private InputManager _input;
+    [SerializeField] private InputManager _input;
 
     /// <summary>
     /// Public accessor for InputManager so everyone can access it via GameManager without being able to modify it.
@@ -89,24 +89,8 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (_input != null)
-        {
-            Destroy(_input);
-        }
-
-        _input = GetComponent<InputManager>();  //PREGUNTAR Si asignamos input en start, el start de Character mov no funciona. - En un principio
-                                                //                                                                                está bien así                                                                               
+        //Inicializamos la referencia del InputManager desde Awake() (en vez de en el Start())
+        //para poder acceder al mismo desde el Start() de cualquier otro componente   
+        _input = GetComponent<InputManager>();                                                                             
     }
-
-    /// <summary>
-    /// START
-    /// Needs to assign _input
-    /// </summary>
-    private void Start()
-    {
-        //Inicializamos la referencia del InputManager desde Awake()
-        //para poder acceder al mismo desde el Start() de cualquier otro componente
-        
-    }
-
 }
