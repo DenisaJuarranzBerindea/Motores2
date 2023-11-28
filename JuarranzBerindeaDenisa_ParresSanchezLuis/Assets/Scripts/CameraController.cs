@@ -79,8 +79,8 @@ public class CameraController : MonoBehaviour
         _myTransform = transform;
         _yPreviousFrameValue = _targetTransform.position.y + _verticalOffset;
 
-        Vector3 rotationOffset = new Vector3(_pitchRotationOffset, 0, 0); // PREGUNTAR
-        _myTransform.eulerAngles = rotationOffset;
+        //Vector3 rotationOffset = new Vector3(_pitchRotationOffset, 0, 0); // PREGUNTAR - Basta con ponerle rotación a la propia cámara
+        //_myTransform.eulerAngles = rotationOffset;
     }
 
     /// <summary>

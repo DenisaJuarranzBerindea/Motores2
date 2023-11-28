@@ -95,7 +95,8 @@ public class GameManager : MonoBehaviour
             Destroy(_input);
         }
 
-        _input = GetComponent<InputManager>();  //PREGUNTAR Si asignamos input en start, el start de Character mov no funciona.
+        _input = GetComponent<InputManager>();  //PREGUNTAR Si asignamos input en start, el start de Character mov no funciona. - En un principio
+                                                //                                                                                está bien así                                                                               
     }
 
     /// <summary>

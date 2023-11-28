@@ -36,7 +36,7 @@ public class InputManager : MonoBehaviour
     void Update()
     {
         //Recibimos el input
-        //PREGUNTAR El StringTyping es aceptable aquí, ¿no?
+        //PREGUNTAR El StringTyping es aceptable aquí, ¿no? - Si
         //PREGUNTAR ¿Deberíamos comprobar si hay input en estos casos? Es que si no hay, simplemente devuelven float 0.0f... 
         //Lo que significa que no recibirá movimiento en esa dirección
         _playerCharacterMovement.SetHorizontalInput(Input.GetAxis("Horizontal"));

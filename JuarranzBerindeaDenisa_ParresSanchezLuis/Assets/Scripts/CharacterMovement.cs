@@ -69,7 +69,7 @@ public class CharacterMovement : MonoBehaviour
     /// <summary>
     /// Movement vertical speed (needs to be updated every frame due to gravity)
     /// </summary>
-    [SerializeField] private float _verticalSpeed; //PREGUNTAR (vertical speed es -10 onGround)
+    [SerializeField] private float _verticalSpeed; //PREGUNTAR (vertical speed es -10 onGround) - Resetear con un valor más grande, rollo -1 
 
     #endregion
 
@@ -119,9 +119,9 @@ public class CharacterMovement : MonoBehaviour
 
         _myTransform = transform;
 
-        _cameraController = Camera.main.GetComponent<CameraController>(); //PREGUNTAR
+        _cameraController = Camera.main.GetComponent<CameraController>(); //PREGUNTAR - Chachi
 
-        GameManager.Instance.Input.RegisterPlayer(this); //PREGUNTAR
+        GameManager.Instance.Input.RegisterPlayer(this); //PREGUNTAR - Chachi
     }
 
     /// <summary>
@@ -148,9 +148,11 @@ public class CharacterMovement : MonoBehaviour
         //Tiempo al cuadrado, pero en clase se ha dicho que se puede obviar. Cómo lo hacemos entonces?)
         _myCharacterController.Move(movementVector * Time.deltaTime);
 
-        //Direccionamiento del personaje, hacia el movimiento //PREGUNTAR
+        //Direccionamiento del personaje, hacia el movimiento //PREGUNTAR - No sé si esto le convencía del todo
         //_myTransform.LookAt(_movementDirection + _myTransform.position); 
         //Slerp
+
+        //Mirar lo del salto brusco
 
         if (_movementDirection != Vector3.zero) 
         {

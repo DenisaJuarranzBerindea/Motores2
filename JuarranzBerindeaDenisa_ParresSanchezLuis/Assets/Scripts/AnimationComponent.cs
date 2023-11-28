@@ -31,12 +31,17 @@ public class AnimationComponent : MonoBehaviour
     /// <summary>
     /// START
     /// Assign _myCharacterController and _myAnimator
-    /// Check if both are correct or disable component  (PREGUNTAR, ¿cómo que si están correctos? ¿Y si no lo están, lo desactivo?)
+    /// Check if both are correct or disable component  (PREGUNTAR, ¿cómo que si están correctos? ¿Y si no lo están, lo desactivo?) - ==null
     /// </summary>
     void Start()
     {
         _myCharacterController = GetComponent<CharacterController>();
         _myAnimator = GetComponent<Animator>(); 
+
+        if (_myCharacterController == null || _myAnimator == null)
+        {
+            enabled = false; //(?No se desactiva el componente)
+        }
     }
 
     /// <summary>
@@ -44,9 +49,9 @@ public class AnimationComponent : MonoBehaviour
     /// Evaluate _myCharacterController velocity
     /// Assign the right animation according to this using integer parameter "AnimState"
     /// </summary>
-    /// //PREGUNTAR:    isGrounded para el salto
-    ///                 flechas grises animator
-    ///                 animacion idle al cambio de sentido
+    /// //PREGUNTAR:    isGrounded para el salto - Guay
+    ///                 flechas grises animator - Dejarlo así
+    ///                 animacion idle al cambio de sentido - Hay que echarle un ojo
     void Update()
     {
         //Debug.Log("(" + _myCharacterController.velocity.x + " , "
