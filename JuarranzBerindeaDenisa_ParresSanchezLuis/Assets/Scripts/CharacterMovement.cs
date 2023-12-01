@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
@@ -69,7 +70,7 @@ public class CharacterMovement : MonoBehaviour
     /// <summary>
     /// Movement vertical speed (needs to be updated every frame due to gravity)
     /// </summary>
-    private float _verticalSpeed; 
+    [SerializeField] private float _verticalSpeed; 
 
     #endregion
 
@@ -134,6 +135,7 @@ public class CharacterMovement : MonoBehaviour
     /// </summary>
     void Update()
     {
+        
         //Dirección horizontal normalizado
         _movementDirection = new Vector3(_xAxis, 0, _zAxis).normalized;
 
@@ -143,11 +145,11 @@ public class CharacterMovement : MonoBehaviour
 
         //Vector de movimiento (parte horizontal + parte vertical)
         Vector3 movementVector = _movementSpeed * _movementDirection + _verticalSpeed * Vector3.up;
-
+        Debug.Log(_verticalSpeed);
         _myCharacterController.Move(movementVector * Time.deltaTime);
 
         // Velocidad vertical por defecto si se encuentra en el suelo
-        if (_myCharacterController.isGrounded) _verticalSpeed = -1f;
+        if (_myCharacterController.isGrounded) _verticalSpeed = -2f;
 
         // Rotación del personaje igualando su eje local forward a su dirección de movimiento.
         // Usamos un Slerp para suavizar la rotación

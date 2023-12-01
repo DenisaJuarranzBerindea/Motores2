@@ -67,7 +67,7 @@ public class AnimationComponent : MonoBehaviour
         //Debug.Log("(" + _myCharacterController.velocity.x + " , ");
         //              + _myCharacterController.velocity.y + " , "
         //              + _myCharacterController.velocity.z + ")");
-
+        Debug.Log(_myCharacterController.isGrounded);
         if (!_myCharacterController.isGrounded)
         {
             _myAnimator.SetInteger(_animationState, 2); //Estado Jump
